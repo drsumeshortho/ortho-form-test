@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <form id="demoForm">
+      <label>Name</label>
+      <input name="Name" required><br><br>
+      <label>Email</label>
+      <input name="Email" required><br><br>
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      const form = document.getElementById("demoForm");
+      const scriptURL = "https://script.google.com/macros/s/AKfycbyJTHPurFWThPlbt1l9JB7C9uVi--YMTW8fK6KTwFt6X-rwC18kiw7UeBcLfGb5AaCq/exec";
+
+      form.addEventListener("submit", e => {
+        e.preventDefault();
+        fetch(scriptURL, {
+          method: 'POST',
+          body: new FormData(form)
+        })
+        .then(res => res.text())
+        .then(data => {
+          alert("Response: " + data);
+        })
+        .catch(err => alert("Error: " + err));
+      });
+    </script>
+  </body>
+</html>
