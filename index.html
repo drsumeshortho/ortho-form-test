@@ -16,13 +16,6 @@
       text-align: center;
       margin-bottom: 25px;
     }
-    .branding img {
-      width: 110px;
-      height: 110px;
-      border-radius: 60px;
-      border: 3px solid #0077b6;
-      object-fit: cover;
-    }
     label {
       display: block;
       margin-top: 15px;
@@ -44,6 +37,7 @@
       border: none;
       border-radius: 6px;
       font-size: 16px;
+      cursor: pointer;
     }
     #successModal {
       display: none;
@@ -58,7 +52,6 @@
 </head>
 <body>
   <div class="branding">
-    <img src="dp.jpg" alt="Dr. Sumesh Subramanian" />
     <h2>Dr. Sumesh Subramanian</h2>
     <p><strong>MS Ortho, Fellowship in Arthroplasty</strong></p>
     <h3>OrthoCure Bone & Joint Speciality Clinic</h3>
@@ -127,42 +120,42 @@
   </div>
 
   <script>
-    const form = document.getElementById('consultForm');
-    const modal = document.getElementById('successModal');
-    const button = form.querySelector("button");
-    const scriptURL = https://script.google.com/macros/s/AKfycbyJTHPurFWThPlbt1l9JB7C9uVi--YMTW8fK6KTwFt6X-rwC18kiw7UeBcLfGb5AaCq/exec';
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("consultForm");
+      const modal = document.getElementById("successModal");
+      const button = form.querySelector("button");
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzw23wkCIglQxEAWghEw-PYn_8H1RR219Vx5iFuwAqAzLS45mVvfFTfg7ZZvfSaYGG2NA/exec';
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      button.disabled = true;
-      button.innerText = "Submitting...";
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        button.disabled = true;
+        button.innerText = "Submitting...";
 
-      const formData = new FormData(form);
-      const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
+        const formData = new FormData(form);
+        const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
 
-      fetch(scriptURL, {
-        method: 'POST',
-        body: jsonData,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        button.disabled = false;
-        button.innerText = "Submit";
-        if (data.status === "ok") {
-          form.reset();
-          modal.style.display = 'block';
-        } else {
-          alert("❌ Submission failed: " + data.message);
-        }
-      })
-      .catch(err => {
-        button.disabled = false;
-        button.innerText = "Submit";
-        alert("❌ Network error. Check connection or script link.");
-        console.error(err);
+        fetch(scriptURL, {
+          method: "POST",
+          body: jsonData,
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            button.disabled = false;
+            button.innerText = "Submit";
+            if (data.status === "ok") {
+              form.reset();
+              modal.style.display = "block";
+            } else {
+              alert("❌ Submission failed: " + data.message);
+            }
+          })
+          .catch((err) => {
+            button.disabled = false;
+            button.innerText = "Submit";
+            alert("❌ Network error. Check connection or script link.");
+            console.error(err);
+          });
       });
     });
   </script>
